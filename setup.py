@@ -190,19 +190,6 @@ def get_package_data():
     return package_data
 
 
-def get_version():
-    """
-    retreive pyproj version information (stored in _proj.pyx) in version variable
-    (taken from Fiona)
-    """
-    with open(os.path.join("pyproj", "__init__.py"), "r") as f:
-        for line in f:
-            if line.find("__version__") >= 0:
-                # parse __version__ and remove surrounding " or '
-                return line.split("=")[1].strip()[1:-1]
-    sys.exit("ERROR: pyproj version not fount.")
-
-
 def get_long_description():
     """
     Get the long description for the file.
@@ -213,7 +200,14 @@ def get_long_description():
 
 setup(
     name="pyproj",
-    version=get_version(),
+    use_scm_version=dict(
+        write_to="pyproj/_version.py",
+        write_to_template='__version__ = "{version}"',
+        tag_regex=(
+            r"^(?:[\w-]+-)?(?P<version>[vV]?\d+(?:\.\d+){0,2}[^\+]+)(?:\+.*)?"
+            r"(?P<suffix>rel)$"
+        ),
+    ),
     description="Python interface to PROJ (cartographic projections "
     "and coordinate transformations library)",
     long_description=get_long_description(),

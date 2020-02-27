@@ -47,7 +47,13 @@ CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
 LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
 NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. """
-__version__ = "2.5.0"
+
+try:
+    from pyproj._version import __version__
+except ImportError:
+    # package is not installed
+    __version__ = "Unknown/Not Installed"
+
 __all__ = [
     "Proj",
     "Geod",
