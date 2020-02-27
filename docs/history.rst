@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+3.0.0
+-----
+* Minimum supported Python version 3.6 (issue #499)
+
 2.6.1
 ~~~~~
 * BUG: Allow `*_name` to be added in CRS.to_cf (issue #585)
