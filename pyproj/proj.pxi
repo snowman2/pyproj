@@ -279,14 +279,6 @@ cdef extern from "proj.h":
 
     const PJ_OPERATIONS *proj_list_operations()
 
-    ctypedef struct PJ_UNITS:
-        const char  *id
-        const char  *to_meter
-        const char  *name
-        double      factor
-    const PJ_UNITS *proj_list_units()
-    const PJ_UNITS *proj_list_angular_units()
-
     ctypedef struct PJ_ELLPS:
         const char  *id   # ellipse keyword name
         const char  *major  # a= value
@@ -450,3 +442,32 @@ cdef extern from "proj.h":
         double dy_dphi
 
     PJ_FACTORS proj_factors(PJ *P, PJ_COORD lp) nogil
+
+    # units
+    ctypedef struct PROJ_UNIT_INFO:
+        # Authority name.
+        char* auth_name
+        # Object code.
+        char* code
+        # Object name. For example "metre", "US survey foot", etc. */
+        char* name
+        # Category of the unit: one of "linear", "linear_per_time", "angular",
+        # "angular_per_time", "scale", "scale_per_time" or "time" */
+        char* category
+        # Conversion factor to apply to transform from that unit to the
+        # corresponding SI unit (metre for "linear", radian for "angular", etc.).
+        # It might be 0 in some cases to indicate no known conversion factor.
+        double conv_factor
+        # PROJ short name, like "m", "ft", "us-ft", etc... Might be NULL */
+        char* proj_short_name
+        # Whether the object is deprecated
+        int deprecated
+
+    PROJ_UNIT_INFO **proj_get_units_from_database(
+        PJ_CONTEXT *ctx,
+        const char *auth_name,
+        const char *category,
+        int allow_deprecated,
+        int *out_result_count,
+    )
+    void proj_unit_list_destroy(PROJ_UNIT_INFO** list);

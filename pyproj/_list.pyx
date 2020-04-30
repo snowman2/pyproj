@@ -64,51 +64,6 @@ def get_prime_meridians_map():
     return prime_meridians_map
 
 
-Unit = namedtuple("Unit", ["id", "to_meter", "name", "factor"])
-
-
-def get_units_map():
-    """
-    Returns
-    -------
-    dict:
-        Units supported by PROJ
-    """
-    cdef PJ_UNITS *proj_units = proj_list_units()
-    cdef int iii = 0
-    units_map = {}
-    while proj_units[iii].id != NULL:
-        units_map[pystrdecode(proj_units[iii].id)] = Unit(
-            id=pystrdecode(proj_units[iii].id),
-            to_meter=pystrdecode(proj_units[iii].to_meter),
-            name=pystrdecode(proj_units[iii].name),
-            factor=proj_units[iii].factor,
-        )
-        iii += 1
-    return units_map
-
-
-def get_angular_units_map():
-    """
-    Returns
-    -------
-    dict:
-        Angular units supported by PROJ
-    """
-    cdef PJ_UNITS *proj_units = proj_list_angular_units()
-    cdef int iii = 0
-    units_map = {}
-    while proj_units[iii].id != NULL:
-        units_map[pystrdecode(proj_units[iii].id)] = Unit(
-            id=pystrdecode(proj_units[iii].id),
-            to_meter=pystrdecode(proj_units[iii].to_meter),
-            name=pystrdecode(proj_units[iii].name),
-            factor=proj_units[iii].factor,
-        )
-        iii += 1
-    return units_map
-
-
 def get_authorities():
     """
     .. versionadded:: 2.4.0
@@ -209,3 +164,96 @@ def get_codes(auth_name, pj_type, allow_deprecated=False):
     finally:
         proj_string_list_destroy(proj_code_list)
     return code_list
+
+
+Unit = namedtuple(
+    "Unit",
+    [
+        "auth_name",
+        "code",
+        "name",
+        "category",
+        "conv_factor",
+        "proj_short_name",
+        "deprecated",
+    ],
+)
+Unit.__doc__ = """
+.. versionadded:: 3.0.0
+
+Parameters
+----------
+auth_name: str
+    Authority name.
+code: str
+    Object code.
+name: str
+    Object name. For example "metre", "US survey foot", etc.
+category: str
+    Category of the unit: one of "linear", "linear_per_time", "angular",
+    "angular_per_time", "scale", "scale_per_time" or "time".
+conv_factor: float
+    Conversion factor to apply to transform from that unit to the
+    corresponding SI unit (metre for "linear", radian for "angular", etc.).
+    It might be 0 in some cases to indicate no known conversion factor.
+proj_short_name: Optional[str]
+    PROJ short name, like "m", "ft", "us-ft", etc... Might be None.
+deprecated: bool
+    Whether the object is deprecated.
+"""
+
+
+def get_units_map(auth_name=None, category=None, allow_deprecated=False):
+    """
+    Get the units available in the PROJ database.
+
+    Parameters
+    ----------
+    auth_name: str, optional
+        The authority name to filter by (e.g. EPSG, PROJ). Default is all.
+    category: str, optional
+        Category of the unit: one of "linear", "linear_per_time", "angular",
+        "angular_per_time", "scale", "scale_per_time" or "time". Default is all.
+    allow_deprecated: bool, optional
+        Whether or not to allow deprecated units. Default is False.
+
+    Returns
+    -------
+    Dict[str, Unit]
+    """
+    cdef const char* c_auth_name = NULL
+    cdef const char* c_category = NULL
+    if auth_name is not None:
+        auth_name = cstrencode(auth_name)
+        c_auth_name = auth_name
+    if category is not None:
+        category = cstrencode(category)
+        c_category = category
+
+    cdef int num_units = 0
+    cdef PROJ_UNIT_INFO** db_unit_list = proj_get_units_from_database(
+        NULL,
+        c_auth_name,
+        c_category,
+        bool(allow_deprecated),
+        &num_units,
+    )
+    units_map = {}
+    try:
+        for iii in range(num_units):
+            proj_short_name = None
+            if db_unit_list[iii].proj_short_name != NULL:
+                proj_short_name = pystrdecode(db_unit_list[iii].proj_short_name)
+            name = pystrdecode(db_unit_list[iii].name)
+            units_map[name] = Unit(
+                auth_name=pystrdecode(db_unit_list[iii].auth_name),
+                code=pystrdecode(db_unit_list[iii].code),
+                name=name,
+                category=pystrdecode(db_unit_list[iii].category),
+                conv_factor=db_unit_list[iii].conv_factor,
+                proj_short_name=proj_short_name,
+                deprecated=bool(db_unit_list[iii].deprecated),
+            )
+    finally:
+        proj_unit_list_destroy(db_unit_list)
+    return units_map
