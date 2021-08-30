@@ -727,7 +727,7 @@ cdef class _Transformer(Base):
         bint errcheck,
     ):
         if self.id == "noop":
-            return
+            return inx, iny, inz, intime
 
         tmp_pj_direction = _PJ_DIRECTION_MAP[TransformDirection.create(direction)]
         cdef PJ_DIRECTION pj_direction = <PJ_DIRECTION>tmp_pj_direction
@@ -804,6 +804,15 @@ cdef class _Transformer(Base):
                     xbuff.data[iii] = xbuff.data[iii]*_DG2RAD
                     ybuff.data[iii] = ybuff.data[iii]*_DG2RAD
         ProjError.clear()
+        if xbuff.is_scalar:
+            inx = xbuff.scalar_data
+        if ybuff.is_scalar:
+            iny = ybuff.scalar_data
+        if inz is not None and zbuff.is_scalar:
+            inz = zbuff.scalar_data
+        if intime is not None and tbuff.is_scalar:
+            intime = tbuff.scalar_data
+        return inx, iny, inz, intime
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -1144,6 +1153,19 @@ cdef class _Transformer(Base):
                     dy_dphi_buff.data[iii] = pj_factors.dy_dphi
 
         ProjError.clear()
+        if lonbuff.is_scalar:
+            meridional_scale = meridional_scale_buff.scalar_data
+            parallel_scale = parallel_scale_buff.scalar_data
+            areal_scale = areal_scale_buff.scalar_data
+            angular_distortion = angular_distortion_buff.scalar_data
+            meridian_parallel_angle = meridian_parallel_angle_buff.scalar_data
+            meridian_convergence = meridian_convergence_buff.scalar_data
+            tissot_semimajor = tissot_semimajor_buff.scalar_data
+            tissot_semiminor = tissot_semiminor_buff.scalar_data
+            dx_dlam = dx_dlam_buff.scalar_data
+            dx_dphi = dx_dphi_buff.scalar_data
+            dy_dlam = dy_dlam_buff.scalar_data
+            dy_dphi = dy_dphi_buff.scalar_data
 
         return Factors(
             meridional_scale=meridional_scale,

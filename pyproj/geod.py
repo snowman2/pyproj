@@ -278,7 +278,7 @@ class Geod(_Geod):
         iny, y_data_type = _copytobuffer(lats)
         inz, z_data_type = _copytobuffer(az)
         ind = _copytobuffer(dist)[0]
-        self._fwd(inx, iny, inz, ind, radians=radians)
+        inx, iny, inz = self._fwd(inx, iny, inz, ind, radians=radians)
         # if inputs were lists, tuples or floats, convert back.
         outx = _convertback(x_data_type, inx)
         outy = _convertback(y_data_type, iny)
@@ -323,7 +323,7 @@ class Geod(_Geod):
         iny, y_data_type = _copytobuffer(lats1)
         inz, z_data_type = _copytobuffer(lons2)
         ind = _copytobuffer(lats2)[0]
-        self._inv(inx, iny, inz, ind, radians=radians)
+        inx, iny, inz = self._inv(inx, iny, inz, ind, radians=radians)
         # if inputs were lists, tuples or floats, convert back.
         outx = _convertback(x_data_type, inx)
         outy = _convertback(y_data_type, iny)
@@ -790,10 +790,11 @@ class Geod(_Geod):
         """
         # process inputs, making copies that support buffer API.
         inx, x_data_type = _copytobuffer(lons)
+        if x_data_type == DataType.FLOAT:
+            return 0.0
         iny = _copytobuffer(lats)[0]
         self._line_length(inx, iny, radians=radians)
-        line_lengths = _convertback(x_data_type, inx)
-        return line_lengths if x_data_type == DataType.FLOAT else line_lengths[:-1]
+        return _convertback(x_data_type, inx)[:-1]
 
     def polygon_area_perimeter(
         self, lons: Any, lats: Any, radians: bool = False

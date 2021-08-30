@@ -713,7 +713,7 @@ class Transformer:
         else:
             intime = None
         # call pj_transform.  inx,iny,inz buffers modified in place.
-        self._transformer._transform(
+        inx, iny, inz, intime = self._transformer._transform(
             inx,
             iny,
             inz=inz,

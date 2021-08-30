@@ -76,11 +76,11 @@ def _copytobuffer_return_scalar(xxx: Any) -> Tuple[array, DataType]:
 
     Returns
     -------
-    Tuple[Any, DataType]
+    Tuple[float, DataType]
         The copy of the data prepared for the PROJ API & Python Buffer API.
     """
     try:
-        return array("d", (float(xxx),)), DataType.FLOAT
+        return float(xxx), DataType.FLOAT
     except Exception:
         raise TypeError("input must be a scalar") from None
 
@@ -137,10 +137,12 @@ def _copytobuffer(xxx: Any, inplace: bool = False) -> Tuple[Any, DataType]:
 
 def _convertback(data_type: DataType, inx: Any) -> Any:
     # if inputs were lists, tuples or floats, convert back to original type.
-    if data_type == DataType.FLOAT:
-        return inx[0]
     if data_type == DataType.LIST:
-        return inx.tolist()
+        if isinstance(inx, array):
+            return inx.tolist()
+        return [inx]
     if data_type == DataType.TUPLE:
-        return tuple(inx)
+        if isinstance(inx, array):
+            return tuple(inx)
+        return (inx,)
     return inx

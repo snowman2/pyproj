@@ -10,7 +10,7 @@ from pyproj.utils import DataType, _copytobuffer, _copytobuffer_return_scalar
 
 @pytest.mark.parametrize("in_data", [numpy.array(1), 1])
 def test__copytobuffer_return_scalar(in_data):
-    assert _copytobuffer_return_scalar(in_data) == (array("d", [1]), DataType.FLOAT)
+    assert _copytobuffer_return_scalar(in_data) == (1, DataType.FLOAT)
 
 
 def test__copytobuffer_return_scalar__invalid():
@@ -21,15 +21,24 @@ def test__copytobuffer_return_scalar__invalid():
 @pytest.mark.parametrize(
     "in_data, data_type",
     [
-        (numpy.array(1), DataType.FLOAT),
-        (DataArray(numpy.array(1)), DataType.FLOAT),
-        (1, DataType.FLOAT),
         ([1], DataType.LIST),
         ((1,), DataType.TUPLE),
     ],
 )
 def test__copytobuffer(in_data, data_type):
     assert _copytobuffer(in_data) == (array("d", [1]), data_type)
+
+
+@pytest.mark.parametrize(
+    "in_data, data_type",
+    [
+        (numpy.array(1), DataType.FLOAT),
+        (DataArray(numpy.array(1)), DataType.FLOAT),
+        (1, DataType.FLOAT),
+    ],
+)
+def test__copytobuffer__scalar(in_data, data_type):
+    assert _copytobuffer(in_data) == (1, data_type)
 
 
 @pytest.mark.parametrize(

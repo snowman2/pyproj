@@ -146,6 +146,14 @@ cdef class Geod:
                     latbuff.data[iii] = _DG2RAD * plat2
                     azbuff.data[iii] = _DG2RAD * pazi2
 
+        if lonbuff.is_scalar:
+            lats = lonbuff.scalar_data
+        if latbuff.is_scalar:
+            lons = latbuff.scalar_data
+        if azbuff.is_scalar:
+            az = azbuff.scalar_data
+        return lats, lons, az
+
     @cython.boundscheck(False)
     @cython.wraparound(False)
     def _inv(
@@ -203,6 +211,13 @@ cdef class Geod:
                     lat1buff.data[iii] = pazi2
                 # write azimuth data into lon2 buffer
                 lon2buff.data[iii] = ps12
+        if lon1buff.is_scalar:
+            lons1 = lon1buff.scalar_data
+        if lat1buff.is_scalar:
+            lats1 = lat1buff.scalar_data
+        if lon2buff.is_scalar:
+            lons2 = lon2buff.scalar_data
+        return lons1, lats1, lons2
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
