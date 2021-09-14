@@ -4,7 +4,7 @@ import warnings
 
 from libc.stdlib cimport free, malloc
 
-from pyproj._compat cimport cstrencode
+from pyproj._compat cimport to_cstr
 
 from pyproj.exceptions import DataDirError, ProjError
 from pyproj.utils import strtobool
@@ -117,8 +117,9 @@ cdef void set_context_data_dir(PJ_CONTEXT* context) except *:
 
     data_dir_list = get_data_dir().split(os.pathsep)
     # the first path will always have the database
-    b_database_path = cstrencode(os.path.join(data_dir_list[0], "proj.db"))
-    cdef const char* c_database_path = b_database_path
+    cdef const char* c_database_path = to_cstr(
+        os.path.join(data_dir_list[0], "proj.db")
+    )
     if not proj_context_set_database_path(context, c_database_path, NULL, NULL):
         warnings.warn("pyproj unable to set database path.")
     cdef int dir_list_len = len(data_dir_list)
@@ -127,8 +128,7 @@ cdef void set_context_data_dir(PJ_CONTEXT* context) except *:
     )
     try:
         for iii in range(dir_list_len):
-            b_data_dir = cstrencode(data_dir_list[iii])
-            c_data_dir[iii] = b_data_dir
+            c_data_dir[iii] = to_cstr(data_dir_list[iii])
         c_data_dir[dir_list_len] = _USER_DATA_DIR
         proj_context_set_search_paths(context, dir_list_len + 1, c_data_dir)
     finally:

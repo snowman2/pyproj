@@ -8,7 +8,7 @@ import re
 import warnings
 from collections import namedtuple
 
-from pyproj._compat cimport cstrencode
+from pyproj._compat cimport to_cstr
 from pyproj._crs cimport (
     _CRS,
     Base,
@@ -271,14 +271,12 @@ cdef PJ* proj_create_crs_to_crs(
     if authority is not None:
         if PROJ_VERSION_MAJOR < 8:
             warnings.warn("authority requires PROJ 8+")
-        b_authority = cstrencode(f"AUTHORITY={authority}")
-        options[options_index] = b_authority
+        options[options_index] = to_cstr(f"AUTHORITY={authority}")
         options_index += 1
     if accuracy is not None:
         if PROJ_VERSION_MAJOR < 8:
             warnings.warn("accuracy requires PROJ 8+")
-        b_accuracy = cstrencode(f"ACCURACY={accuracy}")
-        options[options_index] = b_accuracy
+        options[options_index] = to_cstr(f"ACCURACY={accuracy}")
         options_index += 1
     if allow_ballpark is not None:
         if PROJ_VERSION_MAJOR < 8:
@@ -678,8 +676,8 @@ cdef class _Transformer(Base):
             match_data = auth_match.groupdict()
             transformer.projobj = proj_create_from_database(
                 transformer.context,
-                cstrencode(match_data["authority"]),
-                cstrencode(match_data["code"]),
+                to_cstr(match_data["authority"]),
+                to_cstr(match_data["code"]),
                 PJ_CATEGORY_COORDINATE_OPERATION,
                 False,
                 NULL,

@@ -4,11 +4,11 @@ import os
 
 from pyproj.utils import strtobool
 
-from pyproj._compat cimport cstrencode
+from pyproj._compat cimport to_cstr
 from pyproj._datadir cimport PYPROJ_GLOBAL_CONTEXT
 
 
-def _set_ca_bundle_path(str ca_bundle_path):
+def _set_ca_bundle_path(str ca_bundle_path not None):
     """
     Sets the path to the CA Bundle used by the `curl`
     built into PROJ.
@@ -18,7 +18,7 @@ def _set_ca_bundle_path(str ca_bundle_path):
     ca_bundle_path: str
         The path to the CA Bundle.
     """
-    proj_context_set_ca_bundle_path(PYPROJ_GLOBAL_CONTEXT, cstrencode(ca_bundle_path))
+    proj_context_set_ca_bundle_path(PYPROJ_GLOBAL_CONTEXT, to_cstr(ca_bundle_path))
 
 
 def set_network_enabled(active=None):

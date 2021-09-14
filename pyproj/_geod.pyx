@@ -3,7 +3,7 @@ include "base.pxi"
 cimport cython
 from libc.math cimport ceil, isnan, round
 
-from pyproj._compat cimport cstrencode, empty_array
+from pyproj._compat cimport empty_array, to_cstr
 
 from collections import namedtuple
 

@@ -3,7 +3,7 @@ import re
 import warnings
 from collections import OrderedDict, namedtuple
 
-from pyproj._compat cimport cstrdecode, cstrencode
+from pyproj._compat cimport cstrdecode, to_cstr
 from pyproj._datadir cimport pyproj_context_create, pyproj_context_destroy
 
 from pyproj.aoi import AreaOfUse
@@ -29,7 +29,7 @@ cdef str decode_or_undefined(const char* instring):
     return pystr
 
 
-def is_wkt(str proj_string):
+def is_wkt(str proj_string not None):
     """
     .. versionadded:: 2.0.0
 
@@ -44,8 +44,9 @@ def is_wkt(str proj_string):
     -------
     bool: True if the string is in the Well-Known Text format
     """
-    tmp_string = cstrencode(proj_string)
-    return proj_context_guess_wkt_dialect(NULL, tmp_string) != PJ_GUESSED_NOT_WKT
+    return proj_context_guess_wkt_dialect(
+        NULL, to_cstr(proj_string)
+    ) != PJ_GUESSED_NOT_WKT
 
 
 def is_proj(str proj_string):
@@ -216,16 +217,11 @@ cdef PJ * _from_name(
         PJ *
         """
         cdef PJ_TYPE[1] pj_types = [pj_type]
-        cdef char* c_auth_name = NULL
-        cdef bytes b_auth_name
-        if auth_name is not None:
-            b_auth_name = cstrencode(auth_name)
-            c_auth_name = b_auth_name
 
         cdef PJ_OBJ_LIST *pj_list = proj_create_from_name(
             context,
-            c_auth_name,
-            cstrencode(name_string),
+            to_cstr(auth_name),
+            to_cstr(name_string),
             <PJ_TYPE*>&pj_types,
             1,
             False,
@@ -437,9 +433,8 @@ cdef class Base:
         multiline = b"MULTILINE=NO"
         if pretty:
             multiline = b"MULTILINE=YES"
-        indentation_width = cstrencode(f"INDENTATION_WIDTH={indentation:.0f}")
         options[0] = multiline
-        options[1] = indentation_width
+        options[1] = to_cstr(f"INDENTATION_WIDTH={indentation:.0f}")
         options[2] = NULL
 
         cdef const char* proj_json_string = proj_as_projjson(
@@ -628,7 +623,7 @@ cdef class CoordinateSystem(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* coordinate_system_pj = proj_create(
             context,
-            cstrencode(coordinate_system_string)
+            to_cstr(coordinate_system_string)
         )
         if coordinate_system_pj == NULL or proj_cs_get_type(
             context,
@@ -837,8 +832,8 @@ cdef class Ellipsoid(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* ellipsoid_pj = proj_create_from_database(
             context,
-            cstrencode(auth_name),
-            cstrencode(str(code)),
+            to_cstr(auth_name),
+            to_cstr(str(code)),
             PJ_CATEGORY_ELLIPSOID,
             False,
             NULL,
@@ -869,7 +864,7 @@ cdef class Ellipsoid(_CRSParts):
         return Ellipsoid.from_authority("EPSG", code)
 
     @staticmethod
-    def _from_string(str ellipsoid_string):
+    def _from_string(str ellipsoid_string not None):
         """
         Create an Ellipsoid from a string.
 
@@ -891,7 +886,7 @@ cdef class Ellipsoid(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* ellipsoid_pj = proj_create(
             context,
-            cstrencode(ellipsoid_string)
+            to_cstr(ellipsoid_string)
         )
         if ellipsoid_pj == NULL or proj_get_type(ellipsoid_pj) != PJ_TYPE_ELLIPSOID:
             proj_destroy(ellipsoid_pj)
@@ -1115,8 +1110,8 @@ cdef class PrimeMeridian(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* prime_meridian_pj = proj_create_from_database(
             context,
-            cstrencode(auth_name),
-            cstrencode(str(code)),
+            to_cstr(auth_name),
+            to_cstr(str(code)),
             PJ_CATEGORY_PRIME_MERIDIAN,
             False,
             NULL,
@@ -1147,7 +1142,7 @@ cdef class PrimeMeridian(_CRSParts):
         return PrimeMeridian.from_authority("EPSG", code)
 
     @staticmethod
-    def _from_string(str prime_meridian_string):
+    def _from_string(str prime_meridian_string not None):
         """
         Create an PrimeMeridian from a string.
 
@@ -1169,7 +1164,7 @@ cdef class PrimeMeridian(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* prime_meridian_pj = proj_create(
             context,
-            cstrencode(prime_meridian_string)
+            to_cstr(prime_meridian_string)
         )
         if (
             prime_meridian_pj == NULL or
@@ -1346,7 +1341,7 @@ cdef class Datum(_CRSParts):
         return datum
 
     @staticmethod
-    def _from_authority(auth_name, code, PJ_CATEGORY category):
+    def _from_authority(str auth_name not None, code not None, PJ_CATEGORY category):
         """
         Create a Datum from an authority code.
 
@@ -1365,8 +1360,8 @@ cdef class Datum(_CRSParts):
 
         cdef PJ* datum_pj = proj_create_from_database(
             context,
-            cstrencode(str(auth_name)),
-            cstrencode(str(code)),
+            to_cstr(auth_name),
+            to_cstr(str(code)),
             category,
             False,
             NULL,
@@ -1416,7 +1411,7 @@ cdef class Datum(_CRSParts):
         return Datum.from_authority("EPSG", code)
 
     @staticmethod
-    def _from_string(str datum_string):
+    def _from_string(str datum_string not None):
         """
         Create a Datum from a string.
 
@@ -1439,7 +1434,7 @@ cdef class Datum(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* datum_pj = proj_create(
             context,
-            cstrencode(datum_string)
+            to_cstr(datum_string)
         )
         if (
             datum_pj == NULL or
@@ -1950,8 +1945,8 @@ cdef class CoordinateOperation(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* coord_operation_pj = proj_create_from_database(
             context,
-            cstrencode(auth_name),
-            cstrencode(str(code)),
+            to_cstr(auth_name),
+            to_cstr(str(code)),
             PJ_CATEGORY_COORDINATE_OPERATION,
             use_proj_alternative_grid_names,
             NULL,
@@ -2003,7 +1998,7 @@ cdef class CoordinateOperation(_CRSParts):
         cdef PJ_CONTEXT* context = pyproj_context_create()
         cdef PJ* coord_operation_pj = proj_create(
             context,
-            cstrencode(coordinate_operation_string)
+            to_cstr(coordinate_operation_string)
         )
         if (
             coord_operation_pj == NULL or
@@ -2761,7 +2756,7 @@ cdef class _CRS(Base):
         except IndexError:
             return None
 
-    def list_authority(self, auth_name=None, min_confidence=70):
+    def list_authority(self, str auth_name=None, bint min_confidence=70):
         """
         .. versionadded:: 3.2.0
 
@@ -2803,20 +2798,14 @@ cdef class _CRS(Base):
         cdef PJ_OBJ_LIST *proj_list = NULL
         cdef int *c_out_confidence_list = NULL
         cdef int num_proj_objects = -9999
-        cdef bytes b_auth_name
-        cdef char *user_auth_name = NULL
         cdef int iii = 0
-
-        if auth_name is not None:
-            b_auth_name = cstrencode(auth_name)
-            user_auth_name = b_auth_name
 
         out_confidence_list = []
         try:
             proj_list = proj_identify(
                 self.context,
                 self.projobj,
-                user_auth_name,
+                to_cstr(auth_name),
                 NULL,
                 &c_out_confidence_list
             )
@@ -2858,7 +2847,7 @@ cdef class _CRS(Base):
             CRSError.clear()
         return authority_list
 
-    def to_3d(self, name=None):
+    def to_3d(self, str name=None):
         """
         .. versionadded:: 3.1.0
 
@@ -2878,13 +2867,8 @@ cdef class _CRS(Base):
         -------
         _CRS
         """
-        cdef char* name_3D = NULL
-        if name is not None:
-            b_name = cstrencode(name)
-            name_3D = b_name
-
         cdef PJ * projobj = proj_crs_promote_to_3D(
-            self.context, name_3D, self.projobj
+            self.context, to_cstr(name), self.projobj
         )
         CRSError.clear()
         if projobj == NULL:

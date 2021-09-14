@@ -1,7 +1,7 @@
 import array
 
 
-cpdef bytes cstrencode(str pystr):
+cpdef bytes to_bytes(str pystr):
     """
     Encode a string into bytes.
     """
@@ -9,6 +9,15 @@ cpdef bytes cstrencode(str pystr):
         return pystr.encode("utf-8")
     except UnicodeDecodeError:
         return pystr.decode("utf-8").encode("utf-8")
+
+
+cdef const char* to_cstr(str pystr) except *:
+    """
+    Convert python string to char array (C string)
+    """
+    if pystr is None:
+        return NULL
+    return to_bytes(pystr)
 
 
 cdef str cstrdecode(const char *instring):

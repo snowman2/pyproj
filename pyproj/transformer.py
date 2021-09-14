@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, List, Optional, Tuple, Union, overload
 
 from pyproj import CRS
-from pyproj._compat import cstrencode
+from pyproj._compat import to_bytes
 from pyproj._crs import AreaOfUse, CoordinateOperation
 from pyproj._transformer import (  # noqa: F401 pylint: disable=unused-import
     AreaOfInterest,
@@ -533,8 +533,8 @@ class Transformer:
 
         return Transformer(
             TransformerFromCRS(
-                cstrencode(CRS.from_user_input(crs_from).srs),
-                cstrencode(CRS.from_user_input(crs_to).srs),
+                to_bytes(CRS.from_user_input(crs_from).srs),
+                to_bytes(CRS.from_user_input(crs_to).srs),
                 always_xy=always_xy,
                 area_of_interest=area_of_interest,
                 authority=authority,
@@ -574,7 +574,7 @@ class Transformer:
         Transformer
 
         """
-        return Transformer(TransformerFromPipeline(cstrencode(proj_pipeline)))
+        return Transformer(TransformerFromPipeline(to_bytes(proj_pipeline)))
 
     @overload
     def transform(  # pylint: disable=invalid-name

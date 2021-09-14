@@ -6,7 +6,7 @@ from typing import Optional
 
 from libc.stdlib cimport free, malloc
 
-from pyproj._compat cimport cstrdecode, cstrencode
+from pyproj._compat cimport cstrdecode, to_cstr
 from pyproj._datadir cimport pyproj_context_create, pyproj_context_destroy
 
 from pyproj.aoi import AreaOfUse
@@ -94,7 +94,7 @@ def get_codes(str auth_name not None, pj_type not None, bint allow_deprecated=Fa
         context = pyproj_context_create()
         proj_code_list = proj_get_codes_from_database(
             context,
-            cstrencode(auth_name),
+            to_cstr(auth_name),
             cpj_type,
             allow_deprecated,
         )
@@ -187,14 +187,9 @@ def query_crs_info(
     cdef PJ_TYPE *pj_type_list = NULL
     cdef PROJ_CRS_LIST_PARAMETERS *query_params = NULL
     cdef PROJ_CRS_INFO **crs_info_list = NULL
-    cdef const char* c_auth_name = NULL
     cdef int result_count = 0
     cdef int pj_type_count = 0
     cdef int iii = 0
-    cdef bytes b_auth_name
-    if auth_name is not None:
-        b_auth_name = cstrencode(auth_name)
-        c_auth_name = b_auth_name
     try:
         if pj_types is not None:
             if isinstance(pj_types, (PJType, str)):
@@ -221,7 +216,7 @@ def query_crs_info(
 
         crs_info_list = proj_get_crs_info_list_from_database(
             context,
-            c_auth_name,
+            to_cstr(auth_name),
             query_params,
             &result_count)
     finally:
@@ -363,23 +358,12 @@ def get_units_map(str auth_name=None, str category=None, bint allow_deprecated=F
     -------
     Dict[str, Unit]
     """
-    cdef const char* c_auth_name = NULL
-    cdef const char* c_category = NULL
-    cdef bytes b_auth_name
-    cdef bytes b_category
-    if auth_name is not None:
-        b_auth_name = cstrencode(auth_name)
-        c_auth_name = b_auth_name
-    if category is not None:
-        b_category = cstrencode(category)
-        c_category = b_category
-
     cdef int num_units = 0
     cdef PJ_CONTEXT* context = pyproj_context_create()
     cdef PROJ_UNIT_INFO** db_unit_list = proj_get_units_from_database(
         context,
-        c_auth_name,
-        c_category,
+        to_cstr(auth_name),
+        to_cstr(category),
         bool(allow_deprecated),
         &num_units,
     )

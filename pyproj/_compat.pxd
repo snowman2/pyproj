@@ -1,5 +1,6 @@
 cdef str cstrdecode(const char *instring)
-cpdef bytes cstrencode(str pystr)
+cdef const char *to_cstr(str pystr) except *
+
 
 IF CTE_PYTHON_IMPLEMENTATION == "CPython":
     from cpython cimport array
