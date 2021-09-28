@@ -129,6 +129,20 @@ cdef extern from "proj.h":
         double *z, size_t sz, size_t nz,
         double *t, size_t st, size_t nt
     ) nogil
+    int proj_trans_bounds(
+        PJ_CONTEXT* context,
+        PJ *P,
+        PJ_DIRECTION direction,
+        const double left,
+        const double bottom,
+        const double right,
+        const double top,
+        double* out_left,
+        double* out_bottom,
+        double* out_right,
+        double* out_top,
+        int densify_pts
+    ) nogil
     ctypedef struct PJ_AREA
     PJ *proj_create_crs_to_crs_from_pj(
         PJ_CONTEXT *ctx,
