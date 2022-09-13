@@ -58,7 +58,9 @@ clean-cython: ## clean the cython files
 	rm -f pyproj/*.so
 	rm -f pyproj/*/*.so
 	rm -f pyproj/*/*.c
+	rm -f pyproj/*/*.cpp
 	rm -f pyproj/*.c
+	rm -f pyproj/*.cpp
 
 check-type:
 	mypy pyproj

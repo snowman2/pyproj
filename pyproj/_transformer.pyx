@@ -18,7 +18,7 @@ from pyproj._crs cimport (
     _to_wkt,
     create_area_of_use,
 )
-from pyproj._datadir cimport pyproj_context_create, pyproj_context_destroy
+from pyproj._datadir cimport pyproj_context_create
 
 from pyproj._datadir import _LOGGER
 from pyproj.aoi import AreaOfInterest
@@ -111,11 +111,6 @@ cdef class _TransformerGroup:
         self._unavailable_operations = []
         self._best_available = True
 
-    def __dealloc__(self):
-        """destroy projection definition"""
-        if self.context != NULL:
-            pyproj_context_destroy(self.context)
-
     def __init__(
         self,
         _CRS crs_from not None,
@@ -139,7 +134,6 @@ cdef class _TransformerGroup:
         cdef PJ_OPERATION_FACTORY_CONTEXT* operation_factory_context = NULL
         cdef PJ_OBJ_LIST * pj_operations = NULL
         cdef PJ* pj_transform = NULL
-        cdef PJ_CONTEXT* context = NULL
         cdef const char* c_authority = NULL
         cdef int num_operations = 0
         cdef int is_instantiable = 0
@@ -200,27 +194,26 @@ cdef class _TransformerGroup:
             )
             num_operations = proj_list_get_count(pj_operations)
             for iii in range(num_operations):
-                context = pyproj_context_create()
                 pj_transform = proj_list_get(
-                    context,
+                    self.context,
                     pj_operations,
                     iii,
                 )
                 is_instantiable = proj_coordoperation_is_instantiable(
-                    context,
+                    self.context,
                     pj_transform,
                 )
                 if is_instantiable:
                     self._transformers.append(
                         _Transformer._from_pj(
-                            context,
+                            self.context,
                             pj_transform,
                             always_xy,
                         )
                     )
                 else:
                     coordinate_operation = CoordinateOperation.create(
-                        context,
+                        self.context,
                         pj_transform,
                     )
                     self._unavailable_operations.append(coordinate_operation)
@@ -433,18 +426,13 @@ cdef class _Transformer(Base):
 
     def get_last_used_operation(self):
         IF (CTE_PROJ_VERSION_MAJOR, CTE_PROJ_VERSION_MINOR) >= (9, 1):
+            cdef PJ_CONTEXT* context = pyproj_context_create()
             cdef PJ* last_used_operation = proj_trans_get_last_used_operation(self.projobj)
             if last_used_operation == NULL:
                 raise ProjError(
                     "Last used operation not found. "
                     "This is likely due to not initiating a transform."
                 )
-            cdef PJ_CONTEXT* context = NULL
-            try:
-                context = pyproj_context_create()
-            except:
-                proj_destroy(last_used_operation)
-                raise
             proj_assign_context(last_used_operation, context)
             return _Transformer._from_pj(
                 context,

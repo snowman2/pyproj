@@ -1,6 +1,8 @@
 pyproj/proj_dir/
 pyproj/*.c
+pyproj/*.cpp
 pyproj/*/*.c
+pyproj/*/*.cpp
 pyproj/*/*.html
 pyproj/*.html
 proj-*/

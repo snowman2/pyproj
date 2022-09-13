@@ -5,7 +5,7 @@ import os
 from pyproj.utils import strtobool
 
 from pyproj._compat cimport cstrencode
-from pyproj._datadir cimport PYPROJ_GLOBAL_CONTEXT
+from pyproj._datadir cimport pyproj_context_create
 
 
 def _set_ca_bundle_path(str ca_bundle_path):
@@ -18,7 +18,7 @@ def _set_ca_bundle_path(str ca_bundle_path):
     ca_bundle_path: str
         The path to the CA Bundle.
     """
-    proj_context_set_ca_bundle_path(PYPROJ_GLOBAL_CONTEXT, cstrencode(ca_bundle_path))
+    proj_context_set_ca_bundle_path(pyproj_context_create(), cstrencode(ca_bundle_path))
 
 
 def set_network_enabled(active=None):
@@ -43,7 +43,7 @@ def set_network_enabled(active=None):
         # setting based on the environment variable every time if None
         # because it could have been changed by the user previously
         active = strtobool(os.environ.get("PROJ_NETWORK", "OFF"))
-    proj_context_set_enable_network(PYPROJ_GLOBAL_CONTEXT, bool(active))
+    proj_context_set_enable_network(pyproj_context_create(), bool(active))
 
 
 def is_network_enabled():
@@ -57,4 +57,4 @@ def is_network_enabled():
     bool:
         If PROJ network is enabled by default.
     """
-    return proj_context_is_network_enabled(PYPROJ_GLOBAL_CONTEXT) == 1
+    return proj_context_is_network_enabled(pyproj_context_create()) == 1

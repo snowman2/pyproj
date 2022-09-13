@@ -1,8 +1,13 @@
+# distutils: language = c++
+
+import atexit
 import logging
 import os
 import warnings
 
+from cpython.pythread cimport PyThread_tss_create, PyThread_tss_get, PyThread_tss_set
 from libc.stdlib cimport free, malloc
+from libcpp.vector cimport vector
 
 from pyproj._compat cimport cstrencode
 
@@ -13,16 +18,17 @@ from pyproj.utils import strtobool
 # https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library
 _LOGGER = logging.getLogger("pyproj")
 _LOGGER.addHandler(logging.NullHandler())
-# default to False is the safest mode
-# as it supports multithreading
-_USE_GLOBAL_CONTEXT = strtobool(os.environ.get("PYPROJ_GLOBAL_CONTEXT", "OFF"))
 # static user data directory to prevent core dumping
 # see: https://github.com/pyproj4/pyproj/issues/678
 cdef const char* _USER_DATA_DIR = proj_context_get_user_writable_directory(NULL, False)
+# The key to get the context in each thread
+cdef Py_tss_t CONTEXT_THREAD_KEY
 
 
 def set_use_global_context(active=None):
     """
+    .. deprecated:: 3.5.0 No longer necessary as there is only one context per thread now.
+
     .. versionadded:: 3.0.0
 
     Activates the usage of the global context. Using this
@@ -44,10 +50,17 @@ def set_use_global_context(active=None):
         the environment variable PYPROJ_GLOBAL_CONTEXT and defaults
         to False if it is not found.
     """
-    global _USE_GLOBAL_CONTEXT
     if active is None:
         active = strtobool(os.environ.get("PYPROJ_GLOBAL_CONTEXT", "OFF"))
-    _USE_GLOBAL_CONTEXT = bool(active)
+    if active:
+        warnings.warn(
+            (
+                "PYPROJ_GLOBAL_CONTEXT is no longer necessary in pyproj 3.5+ "
+                "and does not do anything."
+            ),
+            FutureWarning,
+            stacklevel=2,
+        )
 
 
 def get_user_data_dir(create=False):
@@ -74,7 +87,7 @@ def get_user_data_dir(create=False):
         The user writable data directory.
     """
     return proj_context_get_user_writable_directory(
-        PYPROJ_GLOBAL_CONTEXT, bool(create)
+        pyproj_context_create(), bool(create)
     )
 
 
@@ -136,53 +149,43 @@ cdef void pyproj_context_initialize(PJ_CONTEXT* context) except *:
 cdef class ContextManager:
     """
     The only purpose of this class is
-    to ensure the context is cleaned up properly.
+    to ensure the contexts are cleaned up properly.
     """
-    cdef PJ_CONTEXT* context
-
-    def __cinit__(self):
-        self.context = NULL
+    cdef vector[PJ_CONTEXT *] contexts
 
     def __dealloc__(self):
-        if self.context != NULL:
-            proj_context_destroy(self.context)
+        self.clear()
 
-    @staticmethod
-    cdef create(PJ_CONTEXT* context):
-        cdef ContextManager context_manager = ContextManager()
-        context_manager.context = context
-        return context_manager
+    def clear(self):
+        cdef PJ_CONTEXT* context
+        while not self.contexts.empty():
+            context = self.contexts.back()
+            proj_context_destroy(context)
+            self.contexts.pop_back()
 
+    cdef append(self, PJ_CONTEXT* context):
+        self.contexts.push_back(context)
 
-# Different libraries that modify the PROJ global context will influence
-# each other without realizing it. Due to this, pyproj is creating it's own
-# global context so that it doesn't bother other libraries and is insulated
-# against possible external changes made to the PROJ global context.
-# See: https://github.com/pyproj4/pyproj/issues/722
-cdef PJ_CONTEXT* PYPROJ_GLOBAL_CONTEXT = proj_context_create()
-cdef ContextManager CONTEXT_MANAGER = ContextManager.create(PYPROJ_GLOBAL_CONTEXT)
-
+cdef ContextManager CONTEXT_MANAGER = ContextManager()
+atexit.register(CONTEXT_MANAGER.clear)
 
 cdef PJ_CONTEXT* pyproj_context_create() except *:
     """
     Create and initialize the context(s) for pyproj.
     This also manages whether the global context is used.
     """
-    if _USE_GLOBAL_CONTEXT:
-        return PYPROJ_GLOBAL_CONTEXT
-    return proj_context_clone(PYPROJ_GLOBAL_CONTEXT)
-
-cdef void pyproj_context_destroy(PJ_CONTEXT* context) except *:
-    """
-    Destroy context only if not the global context
-    """
-    if context != PYPROJ_GLOBAL_CONTEXT:
-        proj_context_destroy(context)
-
-
-cpdef _pyproj_global_context_initialize():
-    pyproj_context_initialize(PYPROJ_GLOBAL_CONTEXT)
+    PyThread_tss_create(&CONTEXT_THREAD_KEY)
+    cdef const void *thread_pyproj_context = PyThread_tss_get(&CONTEXT_THREAD_KEY)
+    cdef PJ_CONTEXT* pyproj_context = NULL
+    if thread_pyproj_context == NULL:
+        pyproj_context = proj_context_create()
+        pyproj_context_initialize(pyproj_context)
+        PyThread_tss_set(&CONTEXT_THREAD_KEY, pyproj_context)
+        CONTEXT_MANAGER.append(pyproj_context)
+    else:
+        pyproj_context = <PJ_CONTEXT*>thread_pyproj_context
+    return pyproj_context
 
 
 cpdef _global_context_set_data_dir():
-    set_context_data_dir(PYPROJ_GLOBAL_CONTEXT)
+    set_context_data_dir(pyproj_context_create())
