@@ -727,6 +727,7 @@ def test_geod__build_kwargs(kwarg):
 @pytest.mark.parametrize("radians", [False, True])
 def test_geod__reverse_azimuth(radians):
     f = math.pi / 180 if radians else 1
+<<<<<<< HEAD
     xy = np.array(
         [
             [0, 0 - 180],
@@ -742,4 +743,11 @@ def test_geod__reverse_azimuth(radians):
 
     xx = xy.T[0]
     yy = xy.T[1]
+=======
+    xx = np.array([10, 20, -10])
+    yy = np.array([10 - 180, 20 - 180, -10 + 180])
+    for x, y in zip(xx, yy):
+        assert_almost_equal(reverse_azimuth(x * f, radians=radians), y * f)
+
+>>>>>>> 6ba0f134 (geod.py - merge reverse_azimuth and reverse_azimuth_arr)
     assert_almost_equal(reverse_azimuth(xx * f, radians=radians), yy * f)
