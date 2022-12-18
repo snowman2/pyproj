@@ -5,6 +5,7 @@ from libc.math cimport ceil, isnan, round
 
 from pyproj._compat cimport cstrencode, empty_array
 
+import math
 from collections import namedtuple
 
 from pyproj.enums import GeodIntermediateFlag
@@ -63,6 +64,24 @@ cdef int GEOD_INTER_FLAG_AZIS_MASK = (
 )
 cdef int GEOD_INTER_FLAG_AZIS_DISCARD = GeodIntermediateFlag.AZIS_DISCARD
 cdef int GEOD_INTER_FLAG_AZIS_KEEP = GeodIntermediateFlag.AZIS_KEEP
+
+
+cdef double _reverse_azimuth(double azi, double factor) nogil:
+    if azi > 0:
+        azi = azi - factor
+    else:
+        azi = azi + factor
+    return azi
+
+def reverse_azimuth(object azi, bint radians=False):
+    cdef PyBuffWriteManager azibuff = PyBuffWriteManager(azi)
+    cdef Py_ssize_t iii
+    cdef double factor = 180
+    if radians:
+        factor = math.pi
+    with nogil:
+        for iii in range(azibuff.len):
+            azibuff.data[iii] = _reverse_azimuth(azibuff.data[iii], factor=factor)
 
 
 cdef class Geod:
@@ -137,10 +156,7 @@ cdef class Geod:
                 # forward azimuth needs to be flipped 180 degrees
                 # to match the (back azimuth) output of PROJ geod utilities.
                 if return_back_azimuth:
-                    if pazi2 > 0:
-                        pazi2 = pazi2 - 180.
-                    else:
-                        pazi2 = pazi2 + 180.
+                    pazi2 = _reverse_azimuth(pazi2, factor=180)
                 if not radians:
                     lonbuff.data[iii] = plon2
                     latbuff.data[iii] = plat2
@@ -201,10 +217,7 @@ cdef class Geod:
                 # forward azimuth needs to be flipped 180 degrees
                 # to match the (back azimuth) output of PROJ geod utilities.
                 if return_back_azimuth:
-                    if pazi2 > 0:
-                        pazi2 = pazi2 - 180.
-                    else:
-                        pazi2 = pazi2 + 180.
+                    pazi2 = _reverse_azimuth(pazi2, factor=180)
                 if radians:
                     lon1buff.data[iii] = _DG2RAD * pazi1
                     lat1buff.data[iii] = _DG2RAD * pazi2
@@ -327,10 +340,7 @@ cdef class Geod:
                     # forward azimuth needs to be flipped 180 degrees
                     # to match the (back azimuth) output of PROJ geod utilities.
                     if return_back_azimuth:
-                        if pazi2 > 0:
-                            pazi2 = pazi2 - 180.
-                        else:
-                            pazi2 = pazi2 + 180.
+                        pazi2 =_reverse_azimuth(pazi2, factor=180)
                     azis_buff.data[iii] = pazi2
 
         return GeodIntermediateReturn(
