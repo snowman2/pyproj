@@ -1,3 +1,5 @@
+PYTHON_VERSION ?= 3.10
+PROJ ?= 9.3.0
 # This was based on a Makefile by Kirk Hansen <https://github.com/kirkhansen>
 
 .PHONY: clean clean-test clean-pyc clean-build clean-setup clean-cython docs help test
@@ -83,3 +85,12 @@ install-dev: clean ## install development version to active Python's site-packag
 	pre-commit install
 	python -m pip install -r requirements-test.txt
 	PYPROJ_FULL_COVERAGE=YES python -m pip install -e .
+
+dockertestimage:
+	docker build --build-arg PROJ=$(PROJ) --build-arg PYTHON_VERSION=$(PYTHON_VERSION) --target proj -t pyproj:$(PROJ)-py$(PYTHON_VERSION) .
+
+dockertest: dockertestimage
+	docker run --rm -it -v $(shell pwd):/app -v /tmp:/tmp --entrypoint=/bin/bash pyproj:$(PROJ)-py$(PYTHON_VERSION) -c '/venv/bin/python -m pip install -e . && /venv/bin/python -B -m pytest $(OPTS)'
+
+dockergdb: dockertestimage
+	docker run -it -v $(shell pwd):/app --entrypoint=/bin/bash pyproj:$(PROJ)-py$(PYTHON_VERSION) -c '/venv/bin/python -m pip install -e . && gdb -ex=r --args /venv/bin/python -B -m pytest $(OPTS)'
