@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Coordinate Operations" href="coordinate_operation.html" /><link rel="prev" title="CRS" href="crs.html" />
 
-    <link rel="shortcut icon" href="../../_static/icon.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/icon.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
         <title>Coordinate Systems - pyproj 3.6.2.dev0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d623d863" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=613ab9ff" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -68,7 +68,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -83,22 +83,63 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -111,6 +152,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -129,7 +172,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -214,11 +258,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/api/crs/coordinate_system.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -228,21 +278,21 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="coordinate-systems">
-<span id="coordinate-system"></span><h1>Coordinate Systems<a class="headerlink" href="#coordinate-systems" title="Link to this heading">#</a></h1>
+<span id="coordinate-system"></span><h1>Coordinate Systems<a class="headerlink" href="#coordinate-systems" title="Link to this heading">¶</a></h1>
 <section id="coordinatesystem">
-<h2>CoordinateSystem<a class="headerlink" href="#coordinatesystem" title="Link to this heading">#</a></h2>
+<h2>CoordinateSystem<a class="headerlink" href="#coordinatesystem" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.</span></span><span class="sig-name descname"><span class="pre">CoordinateSystem</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.</span></span><span class="sig-name descname"><span class="pre">CoordinateSystem</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.2.0.</span></p>
 </div>
 <p>Coordinate System for CRS</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.name" title="Link to this definition">¶</a></dt>
 <dd><p>The name of the coordinate system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -253,16 +303,16 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.axis_list">
-<span class="sig-name descname"><span class="pre">axis_list</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.axis_list" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">axis_list</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.axis_list" title="Link to this definition">¶</a></dt>
 <dd><p>returns: The Axis list for the coordinate system.
 :rtype: list[Axis]</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.from_json">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unicode</span> <span class="pre">coordinate_system_json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_json" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unicode</span> <span class="pre">coordinate_system_json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_json" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>Create Coordinate System from a JSON string.</p>
 <dl class="field-list simple">
@@ -277,9 +327,9 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.from_json_dict">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span> <span class="pre">coordinate_system_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_json_dict" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span> <span class="pre">coordinate_system_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_json_dict" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>Create Coordinate System from a JSON dictionary.</p>
 <dl class="field-list simple">
@@ -294,9 +344,9 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.from_string">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unicode</span> <span class="pre">coordinate_system_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_string" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unicode</span> <span class="pre">coordinate_system_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_string" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -315,9 +365,9 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.from_user_input">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_user_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_user_input" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_user_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.from_user_input" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <dl class="simple">
 <dt>Create cls from user input:</dt><dd><ul class="simple">
@@ -343,15 +393,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.is_exact_same">
-<span class="sig-name descname"><span class="pre">is_exact_same</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.is_exact_same" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_exact_same</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.is_exact_same" title="Link to this definition">¶</a></dt>
 <dd><p>Compares projection objects to see if they are exactly the same.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.remarks">
-<span class="sig-name descname"><span class="pre">remarks</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.remarks" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remarks</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.remarks" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.4.0.</span></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -365,9 +415,9 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.scope">
-<span class="sig-name descname"><span class="pre">scope</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.scope" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">scope</span></span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.scope" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.4.0.</span></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -381,9 +431,9 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.to_cf">
-<span class="sig-name descname"><span class="pre">to_cf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool</span> <span class="pre">rotated_pole=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_cf" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_cf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool</span> <span class="pre">rotated_pole=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_cf" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+<p><span class="versionmodified added">Added in version 3.0.0.</span></p>
 </div>
 <p>This converts a <a class="reference internal" href="#pyproj.crs.CoordinateSystem" title="pyproj.crs.CoordinateSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyproj.crs.CoordinateSystem</span></code></a> axis
 to a list of Climate and Forecast (CF) Version 1.8 dicts.</p>
@@ -403,9 +453,9 @@ This corresponds to the rotated_latitude_longitude grid_mapping_name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool</span> <span class="pre">pretty=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int</span> <span class="pre">indentation=2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_json" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool</span> <span class="pre">pretty=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int</span> <span class="pre">indentation=2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_json" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.4.0.</span></p>
 </div>
 <p>Convert the object to a JSON string.</p>
 <dl class="field-list simple">
@@ -423,9 +473,9 @@ This corresponds to the rotated_latitude_longitude grid_mapping_name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.to_json_dict">
-<span class="sig-name descname"><span class="pre">to_json_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_json_dict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_json_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_json_dict" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.4.0.</span></p>
 </div>
 <p>Convert the object to a JSON dictionary.</p>
 <dl class="field-list simple">
@@ -437,7 +487,7 @@ This corresponds to the rotated_latitude_longitude grid_mapping_name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.CoordinateSystem.to_wkt">
-<span class="sig-name descname"><span class="pre">to_wkt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WktVersion.WKT2_2019</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_axis_rule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_wkt" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_wkt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WktVersion.WKT2_2019</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_axis_rule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyproj.crs.CoordinateSystem.to_wkt" title="Link to this definition">¶</a></dt>
 <dd><p>Convert the projection to a WKT string.</p>
 <dl class="simple">
 <dt>Version options:</dt><dd><ul class="simple">
@@ -451,7 +501,7 @@ This corresponds to the rotated_latitude_longitude grid_mapping_name.</p>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.6.0: </span>output_axis_rule</p>
+<p><span class="versionmodified added">Added in version 3.6.0: </span>output_axis_rule</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -472,17 +522,17 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 </section>
 <section id="axis">
-<h2>Axis<a class="headerlink" href="#axis" title="Link to this heading">#</a></h2>
+<h2>Axis<a class="headerlink" href="#axis" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj._crs.Axis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj._crs.</span></span><span class="sig-name descname"><span class="pre">Axis</span></span><a class="headerlink" href="#pyproj._crs.Axis" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj._crs.</span></span><span class="sig-name descname"><span class="pre">Axis</span></span><a class="headerlink" href="#pyproj._crs.Axis" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 2.0.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.0.0.</span></p>
 </div>
 <p>Coordinate System Axis</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyproj._crs.Axis.name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyproj._crs.Axis.name" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -492,7 +542,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.abbrev">
-<span class="sig-name descname"><span class="pre">abbrev</span></span><a class="headerlink" href="#pyproj._crs.Axis.abbrev" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abbrev</span></span><a class="headerlink" href="#pyproj._crs.Axis.abbrev" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -502,7 +552,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.direction">
-<span class="sig-name descname"><span class="pre">direction</span></span><a class="headerlink" href="#pyproj._crs.Axis.direction" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">direction</span></span><a class="headerlink" href="#pyproj._crs.Axis.direction" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -512,7 +562,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.unit_conversion_factor">
-<span class="sig-name descname"><span class="pre">unit_conversion_factor</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_conversion_factor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unit_conversion_factor</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_conversion_factor" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
@@ -522,7 +572,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.unit_name">
-<span class="sig-name descname"><span class="pre">unit_name</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unit_name</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_name" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -532,7 +582,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.unit_auth_code">
-<span class="sig-name descname"><span class="pre">unit_auth_code</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_auth_code" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unit_auth_code</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_auth_code" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -542,7 +592,7 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyproj._crs.Axis.unit_code">
-<span class="sig-name descname"><span class="pre">unit_code</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_code" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unit_code</span></span><a class="headerlink" href="#pyproj._crs.Axis.unit_code" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
@@ -554,18 +604,18 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 </section>
 <section id="ellipsoidal2dcs">
-<h2>Ellipsoidal2DCS<a class="headerlink" href="#ellipsoidal2dcs" title="Link to this heading">#</a></h2>
+<h2>Ellipsoidal2DCS<a class="headerlink" href="#ellipsoidal2dcs" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Ellipsoidal2DCS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Ellipsoidal2DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal2DCSAxis" title="pyproj.crs.enums.Ellipsoidal2DCSAxis"><span class="pre">Ellipsoidal2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal2DCSAxis.LONGITUDE_LATITUDE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal2DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal2DCS" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Ellipsoidal2DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal2DCSAxis" title="pyproj.crs.enums.Ellipsoidal2DCSAxis"><span class="pre">Ellipsoidal2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal2DCSAxis.LONGITUDE_LATITUDE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal2DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal2DCS" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyproj.crs.CoordinateSystem" title="pyproj._crs.CoordinateSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoordinateSystem</span></code></a></p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>This generates an Ellipsoidal 2D Coordinate System</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Ellipsoidal2DCS.__new__">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal2DCSAxis" title="pyproj.crs.enums.Ellipsoidal2DCSAxis"><span class="pre">Ellipsoidal2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal2DCSAxis.LONGITUDE_LATITUDE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal2DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal2DCS.__new__" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal2DCSAxis" title="pyproj.crs.enums.Ellipsoidal2DCSAxis"><span class="pre">Ellipsoidal2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal2DCSAxis.LONGITUDE_LATITUDE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal2DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal2DCS.__new__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>axis</strong> (<a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal2DCSAxis" title="pyproj.crs.enums.Ellipsoidal2DCSAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyproj.crs.enums.Ellipsoidal2DCSAxis</span></code></a> or str, optional) – This is the axis order of the coordinate system. Default is
@@ -578,18 +628,18 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 </section>
 <section id="ellipsoidal3dcs">
-<h2>Ellipsoidal3DCS<a class="headerlink" href="#ellipsoidal3dcs" title="Link to this heading">#</a></h2>
+<h2>Ellipsoidal3DCS<a class="headerlink" href="#ellipsoidal3dcs" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Ellipsoidal3DCS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Ellipsoidal3DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal3DCSAxis" title="pyproj.crs.enums.Ellipsoidal3DCSAxis"><span class="pre">Ellipsoidal3DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal3DCSAxis.LONGITUDE_LATITUDE_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal3DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal3DCS" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Ellipsoidal3DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal3DCSAxis" title="pyproj.crs.enums.Ellipsoidal3DCSAxis"><span class="pre">Ellipsoidal3DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal3DCSAxis.LONGITUDE_LATITUDE_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal3DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal3DCS" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyproj.crs.CoordinateSystem" title="pyproj._crs.CoordinateSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoordinateSystem</span></code></a></p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>This generates an Ellipsoidal 3D Coordinate System</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Ellipsoidal3DCS.__new__">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal3DCSAxis" title="pyproj.crs.enums.Ellipsoidal3DCSAxis"><span class="pre">Ellipsoidal3DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal3DCSAxis.LONGITUDE_LATITUDE_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal3DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal3DCS.__new__" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal3DCSAxis" title="pyproj.crs.enums.Ellipsoidal3DCSAxis"><span class="pre">Ellipsoidal3DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Ellipsoidal3DCSAxis.LONGITUDE_LATITUDE_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Ellipsoidal3DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Ellipsoidal3DCS.__new__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>axis</strong> (<a class="reference internal" href="enums.html#pyproj.crs.enums.Ellipsoidal3DCSAxis" title="pyproj.crs.enums.Ellipsoidal3DCSAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyproj.crs.enums.Ellipsoidal3DCSAxis</span></code></a> or str, optional) – This is the axis order of the coordinate system. Default is
@@ -602,18 +652,18 @@ None for AUTO, that depends on the CRS and version.</p></li>
 
 </section>
 <section id="cartesian2dcs">
-<h2>Cartesian2DCS<a class="headerlink" href="#cartesian2dcs" title="Link to this heading">#</a></h2>
+<h2>Cartesian2DCS<a class="headerlink" href="#cartesian2dcs" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Cartesian2DCS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Cartesian2DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Cartesian2DCSAxis" title="pyproj.crs.enums.Cartesian2DCSAxis"><span class="pre">Cartesian2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cartesian2DCSAxis.EASTING_NORTHING</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Cartesian2DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Cartesian2DCS" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">Cartesian2DCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Cartesian2DCSAxis" title="pyproj.crs.enums.Cartesian2DCSAxis"><span class="pre">Cartesian2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cartesian2DCSAxis.EASTING_NORTHING</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Cartesian2DCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Cartesian2DCS" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyproj.crs.CoordinateSystem" title="pyproj._crs.CoordinateSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoordinateSystem</span></code></a></p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>This generates an Cartesian 2D Coordinate System</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.Cartesian2DCS.__new__">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Cartesian2DCSAxis" title="pyproj.crs.enums.Cartesian2DCSAxis"><span class="pre">Cartesian2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cartesian2DCSAxis.EASTING_NORTHING</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Cartesian2DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Cartesian2DCS.__new__" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.Cartesian2DCSAxis" title="pyproj.crs.enums.Cartesian2DCSAxis"><span class="pre">Cartesian2DCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Cartesian2DCSAxis.EASTING_NORTHING</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#Cartesian2DCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.Cartesian2DCS.__new__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>axis</strong> (<a class="reference internal" href="enums.html#pyproj.crs.enums.Cartesian2DCSAxis" title="pyproj.crs.enums.Cartesian2DCSAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyproj.crs.enums.Cartesian2DCSAxis</span></code></a> or str, optional) – This is the axis order of the coordinate system.
@@ -626,18 +676,18 @@ Default is <a class="reference internal" href="enums.html#pyproj.crs.enums.Carte
 
 </section>
 <section id="verticalcs">
-<h2>VerticalCS<a class="headerlink" href="#verticalcs" title="Link to this heading">#</a></h2>
+<h2>VerticalCS<a class="headerlink" href="#verticalcs" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.VerticalCS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">VerticalCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.VerticalCSAxis" title="pyproj.crs.enums.VerticalCSAxis"><span class="pre">VerticalCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">VerticalCSAxis.GRAVITY_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#VerticalCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.VerticalCS" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyproj.crs.coordinate_system.</span></span><span class="sig-name descname"><span class="pre">VerticalCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.VerticalCSAxis" title="pyproj.crs.enums.VerticalCSAxis"><span class="pre">VerticalCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">VerticalCSAxis.GRAVITY_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#VerticalCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.VerticalCS" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyproj.crs.CoordinateSystem" title="pyproj._crs.CoordinateSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoordinateSystem</span></code></a></p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2.5.0.</span></p>
+<p><span class="versionmodified added">Added in version 2.5.0.</span></p>
 </div>
 <p>This generates an Vertical Coordinate System</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyproj.crs.coordinate_system.VerticalCS.__new__">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.VerticalCSAxis" title="pyproj.crs.enums.VerticalCSAxis"><span class="pre">VerticalCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">VerticalCSAxis.GRAVITY_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#VerticalCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.VerticalCS.__new__" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="enums.html#pyproj.crs.enums.VerticalCSAxis" title="pyproj.crs.enums.VerticalCSAxis"><span class="pre">VerticalCSAxis</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">VerticalCSAxis.GRAVITY_HEIGHT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyproj/crs/coordinate_system.html#VerticalCS.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyproj.crs.coordinate_system.VerticalCS.__new__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>axis</strong> (<a class="reference internal" href="enums.html#pyproj.crs.enums.VerticalCSAxis" title="pyproj.crs.enums.VerticalCSAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyproj.crs.enums.VerticalCSAxis</span></code></a> or str, optional) – This is the axis direction of the coordinate system.
@@ -779,8 +829,8 @@ Default is <a class="reference internal" href="enums.html#pyproj.crs.enums.Verti
     </aside>
   </div>
 </div><script src="../../_static/documentation_options.js?v=9be5012a"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
