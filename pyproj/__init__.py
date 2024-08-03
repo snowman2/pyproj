@@ -61,6 +61,7 @@ from pyproj.list import (  # noqa: F401 pylint: disable=unused-import
 from pyproj.proj import Proj, pj_list  # noqa: F401 pylint: disable=unused-import
 from pyproj.transformer import (  # noqa: F401 pylint: disable=unused-import
     Transformer,
+    __compiled_proj_version__,
     itransform,
     proj_version_str,
     transform,
@@ -83,7 +84,6 @@ __all__ = [
     "show_versions",
 ]
 __proj_version__ = proj_version_str
-
 try:
     pyproj.network.set_ca_bundle_path()
 except DataDirError as err:
